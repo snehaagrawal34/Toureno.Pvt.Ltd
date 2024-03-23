@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-image: url("https://img.freepik.com/free-vector/indian-ethnic-people-cartoons-city_18591-52440.jpg?t=st=1710815920~exp=1710819520~hmac=c942d894b0a6b7d0de7d8974&w=740");
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .form {
+      font-family: Jokerman;
+    }
+
+    .city-details {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <a href="#">Home</a>
+  </div>
+
+  <div class="container">
+    <h2>Book Your Trip</h2>
+    <form id="bookingForm" onsubmit="confirmBooking(event)">
+      <label for="destination">Where would you like to travel?</label>
+      <select id="destination" name="destination" placeholder="Enter destination" required>
+        <option value="Udaipur">Udaipur</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Jaipur">Jaipur</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+      </select>
+
+      <label for="date">Select travel date:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="guide">Choose Guide:</label>
+      <select id="guide" name="guide" required>
+        <option value="">Select a guide</option>
+      </select>
+      <div class="city-details" id="cityDetails">
+        <!-- City details will be displayed here -->
+      </div>
+
+      <label for="languages">Language Preferences:</label>
+      <select id="languages" name="languages" required>
+        <option value="">Select the preferred language</option>
+        <option value="Hindi">Hindi</option>
+        <option value="English">English</option>
+        <option value="Gujarati">Gujarati</option>
+        <option value="Marathi">Marathi</option>
+        <option value="Telugu">Telugu</option>
+      </select>
+
+      <button type="submit">Book</button>
+
+    </form>
+  </div>
+
+  <script>
+    const guidesByCity = {
+      Udaipur: ["Mahendra Kumar", "Rajesh Barger", "Manish Shaha"],
+      Delhi: ["Alok", "Shailesh", "Dipendra"], // Add guides for other cities as needed
+      Jaipur: ["Manish", "Ramesh", "Ganesh"],
+      Kolkata: ["Raju", "Ajay", "Naresh"],
+      Mumbai: ["Guide M", "Guide N", "Guide O"],
+      Uttarakhand: ["Umesh", "Bablu", "Vijay"]
+    };
+
+    // Function to populate guide options based on selected city
+    function populateGuides() {
+      const city = document.getElementById('destination').value;
+      const guideDropdown = document.getElementById('guide');
+      const guides = guidesByCity[city] || [];
+
+      // Clear previous options
+      guideDropdown.innerHTML = '<option value="">Select a guide</option>';
+
+      // Add new guide options
+      guides.forEach(guide => {
+        const option = document.createElement('option');
+        option.value = guide;
+        option.textContent = guide;
+        guideDropdown.appendChild(option);
+      });
+    }
+
+    // Call populateGuides initially and whenever the destination changes
+    document.getElementById('destination').addEventListener('change', populateGuides);
+    populateGuides(); // Call initially
+
+    function confirmBooking(event) {
+      event.preventDefault();
+      const destination = document.getElementById('destination').value;
+      const guide = document.getElementById('guide').value;
+      const date = document.getElementById('date').value;
+      const languages = document.getElementById('languages').value;
+
+      alert(`Your trip to ${destination} on ${date} with ${languages} language preference and ${guide} guide has been successfully booked!`);
+    }
+  </script>
+</body>
+
+</html>
